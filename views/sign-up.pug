@@ -1,5 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 #{title}
+  
+  // register form
+  form(method='POST', action='')
+    div.form-group
+      label(for="username") Username:
+      input(type='text', name="username")
+    div.form-group
+      label(for="password") Password:
+      input(type='text', name="Password")
+    div.form-group
+      label(for="firstname") First Name:
+      input(type='text', name="firstname")
+    div.form-group
+      label(for="lastname") Last Name:
+      input(type='text', name="lastname")
+    button.btn.btn-primary(type='submit') Submit
