@@ -1,8 +1,13 @@
 doctype html
 html
   head
-    title= title
+    title Members Only Messageboard
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    
+    block navigation
+      ul(class='topnav')
+        li 
+          a(href='/login') Login
+        li 
+          a(href='/sign-up') Sign-up
     block content
