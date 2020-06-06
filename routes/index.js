@@ -6,7 +6,7 @@ var user_controller = require("../controllers/userController");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Members Only Messageboard' });
 });
 
 /// USER ROUTES ///
@@ -16,5 +16,8 @@ router.get("/sign-up", user_controller.sign_up_get);
 
 /* POST sign-up page. */
 router.post('/sign-up', user_controller.sign_up_post);
+
+/* GET request to view membership status */
+router.get("/membership", user_controller.membership_get);
 
 module.exports = router;

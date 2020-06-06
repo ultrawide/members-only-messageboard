@@ -58,3 +58,8 @@ exports.sign_up_post = [
         });
     }
 ]
+
+/* GET membership page */
+exports.membership_get = (req, res, next) => {
+    res.render('membership', { title: 'Membership' });
+}
