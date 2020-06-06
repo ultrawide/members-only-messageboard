@@ -6,14 +6,14 @@ block content
   // register form
   form(method='POST', action='')
     div.form-group
-      label(for="username") Username:
+      label(for="username") Username (Email):
       input(type='text', name="username")
     div.form-group
       label(for="password") Password:
-      input(type='text', name="Password")
+      input(type='password', name="password")
     div.form-group
-      label(for="confirm password") Confirm Password:
-      input(type='text', name="Confirm Password")
+      label(for="confirm_password") Confirm Password:
+      input(type='password', name="confirm_password")
     div.form-group
       label(for="firstname") First Name:
       input(type='text', name="firstname")
@@ -21,3 +21,8 @@ block content
       label(for="lastname") Last Name:
       input(type='text', name="lastname")
     button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

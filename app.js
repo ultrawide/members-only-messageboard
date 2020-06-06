@@ -6,16 +6,16 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var mongoClient = require("mongodb").MongoClient;
+const mongoose = require("mongoose");
 require('dotenv').config()
 
 var app = express();
 
 // Connect to Azure database
-var mongoClient = require("mongodb").MongoClient;
-mongoClient.connect(process.env.DB_URL, (err, client) => {
-  client.close();
-});
+const mongoDb = process.env.DB_URL;
+mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
