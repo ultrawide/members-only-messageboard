@@ -2,4 +2,7 @@ extends layout
 
 block content
   h1 !{title}
-  p To become a member, login and enter the passcode: "Life is great!" 
+  if user 
+    p Welcome back !{user.username}
+  else
+    p To become a member, login and enter the passcode: "Life is great!" 

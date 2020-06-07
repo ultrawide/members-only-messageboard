@@ -2,6 +2,7 @@ var User = require('../models/user');
 
 var async = require('async');
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
 /* GET sign-up page */
@@ -14,8 +15,8 @@ exports.sign_up_post = [
     /* Sanitize and validate inputs */
     /* Todo: Improve loose sanitization and user friendly errors */
 
-    body("username").isEmail().normalizeEmail(),
-    body("password").isLength({min: 5}),    
+    body("username").isEmail().normalizeEmail().escape(),
+    body("password").isLength({min: 5}).escape(),    
     body("confirm_password").custom((value, { req }) => {
         if (value !== req.body.password) {
             throw new Error('Password confirmation does not match password');
@@ -63,3 +64,14 @@ exports.sign_up_post = [
 exports.membership_get = (req, res, next) => {
     res.render('membership', { title: 'Membership' });
 }
+
+/* GET login page */
+exports.login_get = (req, res, next) => {
+    res.render('login', { title: 'Login' });
+}
+
+/* POST login page */
+exports.login_post = passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login"
+}); 

@@ -2,24 +2,36 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const passport = require('./passport/setup');
+const session = require("express-session");
+
 var logger = require('morgan');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-const mongoose = require("mongoose");
+// Load environment variables
 require('dotenv').config()
 
 var app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+// Express Session
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Connect to Azure database
+const mongoose = require("mongoose");
 const mongoDb = process.env.DB_URL;
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
