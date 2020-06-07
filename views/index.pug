@@ -4,5 +4,11 @@ block content
   h1 !{title}
   if user 
     p Welcome back !{user.username}
+    if user.memberstatus === "Non-Member"
+      p To become a member, go to the membership page and enter the passcode: "Life is great!"
+    else
+      p You are super special awesome!
+    a(href='/logout') Logout
   else
-    p To become a member, login and enter the passcode: "Life is great!" 
+    a(href='/login') Login
+    
