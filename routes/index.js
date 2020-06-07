@@ -20,6 +20,9 @@ router.post('/sign-up', user_controller.sign_up_post);
 /* GET request to view membership status */
 router.get("/membership", user_controller.membership_get);
 
+/* POST request to update membership status */
+router.post("/membership", user_controller.membership_post);
+
 /* GET request for login page */
 router.get("/login", user_controller.login_get);
 

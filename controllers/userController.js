@@ -65,6 +65,38 @@ exports.membership_get = (req, res, next) => {
     res.render('membership', { title: 'Membership' });
 }
 
+/* POST membership page */
+exports.membership_post = [
+    body("passcode").not().isEmpty().trim().escape(),
+    (req, res, next) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render the form again with sanitized values/error messages.
+            res.render('membership', { title: 'Membership', user: req.user, errors: errors.array()});
+            return;
+        }
+        
+        if (req.body.passcode !== "Life is great!") {
+            var err = new Error('Incorrect passscode');
+            return next(err);
+        }
+        
+        User.findByIdAndUpdate( 
+            {_id: req.user.id}, 
+            {"memberstatus":"Member"},
+            (err, result) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.redirect("/");
+                }
+            }
+        );
+    }
+]
+
 /* GET login page */
 exports.login_get = (req, res, next) => {
     res.render('login', { title: 'Login' });
