@@ -79,7 +79,7 @@ exports.membership_post = [
         }
         
         if (req.body.passcode !== "Life is great!") {
-            var err = new Error('Incorrect passscode');
+            var err = new Error('Incorrect passcode');
             return next(err);
         }
         
