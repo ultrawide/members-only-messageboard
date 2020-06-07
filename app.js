@@ -5,13 +5,13 @@ var cookieParser = require('cookie-parser');
 const passport = require('./passport/setup');
 const session = require("express-session");
 
+require('dotenv').config();
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // Load environment variables
-require('dotenv').config()
 
 var app = express();
 
