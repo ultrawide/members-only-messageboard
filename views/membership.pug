@@ -3,7 +3,7 @@ extends layout
 block content
   h1 #{title}
 
-  if !user
+  if user.memberstatus !== "Member"
     p Enter in the secret passcode to acquire membership status! In case you forgot, "Life is great!"
 
     form(method='POST', action='')
@@ -11,5 +11,7 @@ block content
         label(for="passcode") Passcode:
         input(type='text', name="passcode")
         button.btn.btn-primary(type='submit') Submit
+  else if user.memberstatus === "Member"
+    p You are already a member! :)
   else
     p Please log in first for membership
