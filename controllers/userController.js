@@ -62,7 +62,7 @@ exports.sign_up_post = [
 
 /* GET membership page */
 exports.membership_get = (req, res, next) => {
-    res.render('membership', { title: 'Membership' });
+    res.render('membership', { title: 'Membership', user: req.user });
 }
 
 /* POST membership page */

@@ -6,8 +6,8 @@ block content
     p Welcome back !{user.username}
     if user.memberstatus === "Non-Member"
       p To become a member, go to the membership page and enter the passcode: "Life is great!"
-    else
-      p You are super special awesome!
+    else if user.memberstatus === "Member"
+      p You are a super special awesome member!
     a(href='/logout') Logout
   else
     a(href='/login') Login
