@@ -17,6 +17,11 @@ block content
           else
             li #[strong User:] anonymous
             li #[strong Date added:] hidden
+          if user.admin === true
+            form(method='POST' action='')
+              div.form-group
+                input#msg_id.form-control(type='hidden',name='msg_id', required='true', value=message._id )
+              button.btn.btn-danger(type='submit') Delete
           br
         else
           li There are no messages
@@ -27,7 +32,7 @@ block content
     p
     | Welcome, thanks for checking this out. This is a message board for anyone. However, messages can only be viewed
     | by logged in users. Users with membership get additional priviledges to view author and submission date of messages.
-    | The administrator account has the ability to delete messages. 
+    | Otherwise, these details are hidden! The administrator account has the ability to delete messages. 
     | #[strong Please don't fill this messageboard with profanity!]
     p Admin account: admin@admin.com password
     p Non-member account: non-member@non-member.com password

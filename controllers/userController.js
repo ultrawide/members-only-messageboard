@@ -10,7 +10,7 @@ exports.index_get = (req, res, next) => {
     // Retrieve all messages and display
     Message.find()
     .populate('user')
-    // .sort([['timestamp', 'ascending']]) // Azure CosmosDB does not support sorting on fields which are not indexed
+    // .sort([['timestamp', 'ascending']]) // Azure Cosmos DB does not support sorting on non-indexed fields
     .exec(function (err, list_messages) {
         if(err) { return next(err); }
         // Successful, so render
@@ -91,22 +91,34 @@ exports.membership_post = [
             return;
         }
         
-        if (req.body.passcode !== "Life is great!") {
+        if (req.body.passcode === "Life is great!") {
+            User.findByIdAndUpdate( 
+                {_id: req.user.id}, 
+                {"memberstatus":"Member"},
+                (err, result) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        res.redirect("/");
+                    }
+                }
+            );
+        } else if (req.body.passcode === "Life is amazing!")  {
+            User.findByIdAndUpdate( 
+                {_id: req.user.id}, 
+                {"admin":true},
+                (err, result) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        res.redirect("/");
+                    }
+                }
+            );
+        } else {
             var err = new Error('Incorrect passcode');
             return next(err);
         }
-        
-        User.findByIdAndUpdate( 
-            {_id: req.user.id}, 
-            {"memberstatus":"Member"},
-            (err, result) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.redirect("/");
-                }
-            }
-        );
     }
 ]
 

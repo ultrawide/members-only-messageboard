@@ -37,3 +37,13 @@ exports.create_message_post = [
         });
     }
 ]
+
+// Delete message
+exports.message_delete_post = async (req, res, next) => {
+    try {
+        await Message.findByIdAndRemove(req.body.msg_id);
+        res.redirect('/');
+    } catch (e) {
+        next(e);
+    }
+}
