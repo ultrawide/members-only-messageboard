@@ -9,7 +9,6 @@ var UserSchema = new Schema(
     username: { type: String, required: true, min: 2, max: 30},
     password: { type: String, required: true, min: 2, max: 30},
     memberstatus: {type: String, required: true, enum: ['Member', 'Non-Member'], default: 'Non-Member'},
-    messages: [{ type: Schema.Types.ObjectId, ref: 'Message'}]
   }
 );
 

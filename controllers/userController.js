@@ -1,9 +1,22 @@
 var User = require('../models/user');
+var Message = require('../models/message');
 
 var async = require('async');
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
+
+exports.index_get = (req, res, next) => {
+    // Retrieve all messages and display
+    Message.find()
+    .populate('user')
+    // .sort([['timestamp', 'ascending']]) // Azure CosmosDB does not support sorting on fields which are not indexed
+    .exec(function (err, list_messages) {
+        if(err) { return next(err); }
+        // Successful, so render
+        res.render('index', { title: 'Messageboard', user: req.user, messages: list_messages});
+    });
+}
 
 /* GET sign-up page */
 exports.sign_up_get = (req, res, next) => {
@@ -108,7 +121,40 @@ exports.login_post = passport.authenticate("local", {
     failureRedirect: "/login"
 }); 
 
+/* GET logout */
 exports.logout_get = (req, res) => {
     req.logout();
     res.redirect("/");
 }
+
+/* GET create message */
+exports.create_message_get = (req, res, next) => {
+    res.render('create-message', {title: 'Create Message'});
+}
+
+/* POST create message */
+exports.create_message_post = [
+    body("message").not().isEmpty().trim().escape(),
+    (req, res, next) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render the form again with sanitized values/error messages.
+            res.render('create-message', { title: 'Create Message', user: req.user, errors: errors.array()});
+            return;
+        }
+        
+        // Create and add message to database
+        const message = new Message({ 
+            user: req.user,
+            message: req.body.message, 
+            timestamp: Date.now()
+        }).save(err => {
+            if (err) {
+                return next(err);
+            };
+            res.redirect("/");
+        });
+    }
+]

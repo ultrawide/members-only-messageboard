@@ -1,14 +1,27 @@
 extends layout
 
 block content
-  h1 !{title}
   if user 
-    p Welcome back !{user.username}
-    if user.memberstatus === "Non-Member"
-      p To become a member, go to the membership page and enter the passcode: "Life is great!"
-    else if user.memberstatus === "Member"
-      p You are a super special awesome member!
+    p Welcome back !{user.firstname} !{user.lastname}
     a(href='/logout') Logout
+    br
+    a(href='/create-message') Create Message
+    
+    if messages 
+      ul
+        each message in messages
+          li #[strong Text:] !{message.message}
+          if user.memberstatus === "Member"
+            li #[strong User:] !{message.user.username}
+            li #[strong Date added:] !{message.timestamp}
+          else
+            li #[strong User:] anonymous
+            li #[strong Date added:] hidden
+          br
+        else
+          li There are no messages
+        
+
   else
     a(href='/login') Login
     
