@@ -9,7 +9,7 @@ block content
     
     if messages 
       ul
-        each message in messages
+        each message in messages.reverse()
           li #[strong Text:] !{message.message}
           if user.memberstatus === "Member"
             li #[strong User:] !{message.user.username}
@@ -26,7 +26,7 @@ block content
     a(href='/login') Login
     p
     | Welcome, thanks for checking this out. This is a message board for anyone. However, messages can only be viewed
-    | by logged in users. Users with membership get additional priviledges to view author and submission date for messages.
+    | by logged in users. Users with membership get additional priviledges to view author and submission date of messages.
     | The administrator account has the ability to delete messages. 
     | #[strong Please don't fill this messageboard with profanity!]
     p Admin account: admin@admin.com password
