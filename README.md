@@ -1,6 +1,6 @@
 # members-only-messageboard
 
-Suggested improvements if I decide to come back to this :)
+Future Todos:
 
 Remove session-based logins and use json web tokens
 Add CORS
